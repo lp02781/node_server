@@ -105,6 +105,7 @@ pub async fn start_mqtt_publisher() {
         client.publish("/mqtt_actix/data", QoS::AtMostOnce, false, json_data.clone()).unwrap();
         println!("Published: Topic = /mqtt_actix/data, Payload = {}", json_data); 
 
+        /*
         match serde_json::from_str::<json::MqttPayload>(&json_data) {
             Ok(payload) => {
                 if let Err(e) = post_mqtt_data(payload).await {
@@ -115,6 +116,7 @@ pub async fn start_mqtt_publisher() {
                 eprintln!("[publisher] Failed to deserialize MQTT payload: {:?}", e);
             }
         }
+        */
 
         tokio::time::sleep(Duration::from_secs(10)).await; 
     }
