@@ -10,7 +10,7 @@ use crate::json;
 
 pub async fn post_mqtt_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
-    let url = "http://localhost:5000/mqtt/data";
+    let url = "http://localhost:5000/node/mqtt/data";
 
     let response = client
         .post(url)
@@ -76,10 +76,18 @@ pub async fn start_mqtt_publisher() {
     let mut rng = StdRng::from_entropy(); 
 
     loop {
-        let timestamp = Utc::now().to_rfc3339();
+        let timestamp = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)
+            .unwrap()
+            .as_secs_f64();
+
+        let temperature = rng.gen_range(15.0..40.0);  
+        let humidity = rng.gen_range(30..80);          
+        let current = rng.gen_range(1.0..10.0);        
+
         let sensor_data = json::SensorData {
-            temperature: rng.gen_range(20.0..30.0),
-            humidity: rng.gen_range(40.0..60.0),
+            temperature,
+            humidity,
+            current,
         };
 
         let payload = json::NodePayload {
@@ -96,7 +104,7 @@ pub async fn start_mqtt_publisher() {
         match serde_json::from_str::<json::NodePayload>(&json_data) {
             Ok(payload) => {
                 if let Err(e) = post_mqtt_data(payload).await {
-                    eprintln!("[publisher] Error posting MQTT data: {:?}", e);
+                    eprintln!("[publisher] Error post MQTT data: {:?}", e);
                 }
             }
             Err(e) => {
