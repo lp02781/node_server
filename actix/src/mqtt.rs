@@ -8,7 +8,7 @@ use rand::SeedableRng;
 
 use crate::json;
 
-pub async fn post_node_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
+pub async fn post_mqtt_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
     let url = "http://localhost:5000/node/data";
 
@@ -44,7 +44,7 @@ pub async fn start_mqtt_subscriber() {
                 
                 match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
                     Ok(payload) => {
-                        if let Err(e) = post_node_data(payload).await {
+                        if let Err(e) = post_mqtt_data(payload).await {
                             eprintln!("Error sending MQTT data: {:?}", e);
                         }
                     }
@@ -73,7 +73,7 @@ pub async fn start_mqtt_publisher() {
 
     let (client, mut connection) = Client::new(mqttoptions, 10);
 
-    let mut rng = StdRng::from_entropy(); post_node_data
+    let mut rng = StdRng::from_entropy(); post_mqtt_data
             current,
         };
 
@@ -88,9 +88,9 @@ pub async fn start_mqtt_publisher() {
         client.publish("/mqtt_actix/data", QoS::AtMostOnce, false, json_data.clone()).unwrap();
         println!("Published: Topic = /mqtt_actix/data, Payload = {}", json_data); 
 
-        match serde_json::from_str::<json::MqttPayload>(&json_data) {
+        match serde_json::from_str::<json::NodePayload>(&json_data) {
             Ok(payload) => {
-                if let Err(e) = post_node_data(payload).await {
+                if let Err(e) = post_mqtt_data(payload).await {
                     eprintln!("[publisher] Error post MQTT data: {:?}", e);
                 }
             }

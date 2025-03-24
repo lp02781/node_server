@@ -10,16 +10,16 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .route("/node/mqtt/data", web::post().to(manual_hello))
+            .route("/node/data", web::post().to(post_node_data))
     })
     .bind(("127.0.0.1", 5000))?
     .run()
     .await
 }
 
-pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::Error> {
+pub async fn post_node_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
-    let url = "http://localhost:5000/node/mqtt/data";
+    let url = "http://localhost:7000/database/data";
 
     let response = client
         .post(url)
