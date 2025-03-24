@@ -61,4 +61,4 @@ jobs:
 
       - name: Deploy to production
         run: |
-          echo "Deploying the Docker image to production Docker Hub
+          echo "Deploying the Docker image to production Docker Hub"
