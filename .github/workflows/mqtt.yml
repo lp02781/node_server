@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,16 +24,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Ensure you have a requirements.txt file for dependencies
-
+          
       - name: Run tests
         run: |
-          # You can add tests for your Python code here
-          python -m unittest discover  # Example for unit tests (adjust based on your project)
+          cd ./mqtt_node
+          python -m unittest discover 
 
   deploy:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: github.event_name == 'push'
     steps:
       - name: Checkout code
@@ -44,7 +43,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t mqtt_node_image:latest ./  # Build the Docker image using the Dockerfile
+          docker build -t node_mqtt_image:latest ./mqtt
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -54,13 +53,12 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag mqtt_node_image:latest lp02781/mqtt_node_image:latest  # Replace with your Docker Hub username/repository
+          docker tag node_mqtt_image:latest lp02781/node_mqtt_image:latest 
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push lp02781/mqtt_node_image:latest  # Push the Docker image to Docker Hub
+          docker push lp02781/node_mqtt_image:latest  
 
       - name: Deploy to production
         run: |
-          echo "Deploying the Docker image to production..."
-          # Add your actual deployment logic here (e.g., Docker Compose, Kubernetes, AWS ECS, etc.)
+          echo "Deploying the Docker image to production Docker Hub

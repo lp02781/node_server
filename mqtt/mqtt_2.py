@@ -5,7 +5,7 @@ import random
 
 broker = "localhost"
 port = 1883
-topic = "/mqtt_node_2/data"
+topic = "/mqtt_2/data"
 
 client = mqtt.Client(protocol=mqtt.MQTTv5)  
 
@@ -31,7 +31,7 @@ try:
         humidity = random.randint(30, 80)
         current = random.uniform(1, 10)
         sensor_data = {
-            "id": "mqtt_node_2",
+            "id": "mqtt_2",
             "timestamp": time.time(),
             "data": {  
                 "temperature": temperature,

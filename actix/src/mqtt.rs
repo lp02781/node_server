@@ -8,6 +8,7 @@ use rand::SeedableRng;
 
 use crate::json;
 
+/*
 pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
     let url = "http://localhost:5000/node/mqtt/data";
@@ -20,6 +21,7 @@ pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::E
 
     Ok(())
 }
+*/
 
 pub async fn start_mqtt_subscriber() {
     let mut mqttoptions = MqttOptions::new("mqtt_subscriber", "localhost", 1883);
@@ -30,10 +32,10 @@ pub async fn start_mqtt_subscriber() {
 
     let (client, mut connection) = Client::new(mqttoptions, 10);
 
-    client.subscribe("/mqtt_node_1/data", QoS::AtMostOnce).unwrap();
-    client.subscribe("/mqtt_node_2/data", QoS::AtMostOnce).unwrap();
+    client.subscribe("/mqtt_1/data", QoS::AtMostOnce).unwrap();
+    client.subscribe("/mqtt_2/data", QoS::AtMostOnce).unwrap();
     
-    println!("Subscribed to /mqtt_node_1/data, /mqtt_node_2/data");
+    println!("Subscribed to /mqtt_1/data, /mqtt_2/data");
 
     loop {
         match connection.eventloop.poll().await {
@@ -41,7 +43,8 @@ pub async fn start_mqtt_subscriber() {
                 println!(
                     "Received: Topic = {}, Payload = {:?}", publish.topic, publish.payload
                 );
-
+                
+                /*
                 match serde_json::from_slice::<json::MqttPayload>(&publish.payload) {
                     Ok(payload) => {
                         if let Err(e) = post_mqtt_data(payload).await {
@@ -52,6 +55,7 @@ pub async fn start_mqtt_subscriber() {
                         eprintln!("Failed to deserialize MQTT payload: {:?}", e);
                     }
                 }
+                */
             }
             Ok(_) => {}
             Err(e) => {
