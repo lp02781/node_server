@@ -10,7 +10,7 @@ use crate::json;
 
 pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
-    let url = "http://localhost:7000/database/mqtt/data";
+    let url = "http://localhost:5000/node/mqtt/data";
 
     let response = client
         .post(url)

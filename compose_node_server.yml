@@ -3,19 +3,19 @@ version: "3.3"
 services:
   mosquitto:
     image: eclipse-mosquitto:latest
-    container_name: mqtt_mosquitto_container
+    container_name: node_mosquitto_container
     restart: unless-stopped
     network_mode: "host"
 
   node_sim:
-    image: lp02781/mqtt_node_image
-    container_name: mqtt_node_container
+    image: lp02781/node_mqtt_image
+    container_name: node_mqtt_container
     restart: unless-stopped
     network_mode: "host"
 
   mqtt_actix:
-    image: lp02781/mqtt_actix_image
-    container_name: mqtt_actix_container
+    image: lp02781/node_actix_image
+    container_name: node_actix_container
     restart: unless-stopped  
     network_mode: "host" 
     
