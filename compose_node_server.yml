@@ -7,13 +7,13 @@ services:
     restart: unless-stopped
     network_mode: "host"
 
-  node_sim:
+  mqtt:
     image: lp02781/node_mqtt_image
     container_name: node_mqtt_container
     restart: unless-stopped
     network_mode: "host"
 
-  mqtt_actix:
+  actix:
     image: lp02781/node_actix_image
     container_name: node_actix_container
     restart: unless-stopped  
