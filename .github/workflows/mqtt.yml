@@ -27,7 +27,7 @@ jobs:
           
       - name: Run tests
         run: |
-          cd ./mqtt_node
+          cd ./mqtt
           python -m unittest discover 
 
   deploy:
