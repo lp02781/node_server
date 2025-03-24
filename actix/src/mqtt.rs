@@ -33,14 +33,9 @@ pub async fn start_mqtt_subscriber() {
     client.subscribe("/mqtt_1/data", QoS::AtMostOnce).unwrap();
     client.subscribe("/mqtt_2/data", QoS::AtMostOnce).unwrap();
     
-    println!("Subscribed to /mqtt_1/data, /mqtt_2/data");
-
     loop {
         match connection.eventloop.poll().await {
             Ok(Event::Incoming(Packet::Publish(publish))) => {
-                println!(
-                    "Received: Topic = {}, Payload = {:?}", publish.topic, publish.payload
-                );
                 
                 match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
                     Ok(payload) => {
@@ -55,13 +50,11 @@ pub async fn start_mqtt_subscriber() {
             }
             Ok(_) => {}
             Err(e) => {
-                println!("Error receiving message: {:?}", e);
                 break;
             }
         }
         tokio::time::sleep(Duration::from_secs(1)).await;
     }
-    println!("MQTT subscriber disconnected or error occurred.");
 }
 
 pub async fn start_mqtt_publisher() {
@@ -99,8 +92,7 @@ pub async fn start_mqtt_publisher() {
         let json_data = serde_json::to_string(&payload).unwrap();
         
         client.publish("/mqtt_actix/data", QoS::AtMostOnce, false, json_data.clone()).unwrap();
-        println!("Published: Topic = /mqtt_actix/data, Payload = {}", json_data); 
-
+        
         match serde_json::from_str::<json::NodePayload>(&json_data) {
             Ok(payload) => {
                 if let Err(e) = post_mqtt_data(payload).await {
@@ -114,6 +106,4 @@ pub async fn start_mqtt_publisher() {
 
         tokio::time::sleep(Duration::from_secs(10)).await; 
     }
-
-    println!("MQTT publisher disconnected or error occurred.");
 }
