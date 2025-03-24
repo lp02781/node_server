@@ -8,7 +8,7 @@ pub struct SensorData {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct MqttPayload {
+pub struct NodePayload {
     pub id: String,
     pub timestamp: f64,
     pub data: SensorData,

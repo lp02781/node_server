@@ -8,10 +8,9 @@ use rand::SeedableRng;
 
 use crate::json;
 
-/*
-pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::Error> {
+pub async fn post_node_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
-    let url = "http://localhost:5000/node/mqtt/data";
+    let url = "http://localhost:5000/node/data";
 
     let response = client
         .post(url)
@@ -20,8 +19,7 @@ pub async fn post_mqtt_data(payload: json::MqttPayload) -> Result<(), reqwest::E
         .await?;
 
     Ok(())
-}
-*/
+} 
 
 pub async fn start_mqtt_subscriber() {
     let mut mqttoptions = MqttOptions::new("mqtt_subscriber", "localhost", 1883);
@@ -44,10 +42,9 @@ pub async fn start_mqtt_subscriber() {
                     "Received: Topic = {}, Payload = {:?}", publish.topic, publish.payload
                 );
                 
-                /*
-                match serde_json::from_slice::<json::MqttPayload>(&publish.payload) {
+                match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
                     Ok(payload) => {
-                        if let Err(e) = post_mqtt_data(payload).await {
+                        if let Err(e) = post_node_data(payload).await {
                             eprintln!("Error sending MQTT data: {:?}", e);
                         }
                     }
@@ -55,7 +52,6 @@ pub async fn start_mqtt_subscriber() {
                         eprintln!("Failed to deserialize MQTT payload: {:?}", e);
                     }
                 }
-                */
             }
             Ok(_) => {}
             Err(e) => {
@@ -77,24 +73,11 @@ pub async fn start_mqtt_publisher() {
 
     let (client, mut connection) = Client::new(mqttoptions, 10);
 
-    let mut rng = StdRng::from_entropy(); 
-
-    loop {
-        let timestamp = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap()
-            .as_secs_f64();
-
-        let temperature = rng.gen_range(15.0..40.0);  
-        let humidity = rng.gen_range(30..80);          
-        let current = rng.gen_range(1.0..10.0);        
-
-        let sensor_data = json::SensorData {
-            temperature,
-            humidity,
+    let mut rng = StdRng::from_entropy(); post_node_data
             current,
         };
 
-        let payload = json::MqttPayload {
+        let payload = json::NodePayload {
             id: String::from("mqtt_actix"),
             timestamp,
             data: sensor_data,
@@ -105,10 +88,9 @@ pub async fn start_mqtt_publisher() {
         client.publish("/mqtt_actix/data", QoS::AtMostOnce, false, json_data.clone()).unwrap();
         println!("Published: Topic = /mqtt_actix/data, Payload = {}", json_data); 
 
-        /*
         match serde_json::from_str::<json::MqttPayload>(&json_data) {
             Ok(payload) => {
-                if let Err(e) = post_mqtt_data(payload).await {
+                if let Err(e) = post_node_data(payload).await {
                     eprintln!("[publisher] Error post MQTT data: {:?}", e);
                 }
             }
@@ -116,7 +98,6 @@ pub async fn start_mqtt_publisher() {
                 eprintln!("[publisher] Failed to deserialize MQTT payload: {:?}", e);
             }
         }
-        */
 
         tokio::time::sleep(Duration::from_secs(10)).await; 
     }
