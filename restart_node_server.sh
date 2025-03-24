@@ -4,6 +4,6 @@ set -x
 GREEN='\e[32m'
 
 echo "${GREEN}Restart container${NC}"
-docker restart mqtt_mosquitto_container
-docker restart mqtt_node_container
-docker restart mqtt_actix_container
+docker restart node_mosquitto_container
+docker restart node_mqtt_container
+docker restart node_actix_container
