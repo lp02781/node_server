@@ -11,4 +11,7 @@ ENV ROS_PYTHON_VERSION=3
 ENV ROS_DISTRO=humble
 
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-CMD ["bash"]
+RUN colcon build
+RUN echo "source install/setup.bash" >> ~/.bashrc
+
+CMD ["bash", "-c", "source ~/.bashrc && ros2 launch ros2_rust haha.launch.py"]
