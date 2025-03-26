@@ -8,7 +8,7 @@ mod ros2;
 async fn main() -> std::io::Result<()> {   
     tokio::spawn(async {mqtt::start_mqtt_subscriber().await;});
     tokio::spawn(async {mqtt::start_mqtt_publisher().await;});
-    tokio::spawn(async {ros2::start_ros2_publisher().await;});
+    //tokio::spawn(async {ros2::start_ros2_publisher().await;});
 
     HttpServer::new(move || {
         App::new()

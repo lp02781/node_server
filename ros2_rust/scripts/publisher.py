@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 
@@ -5,9 +7,9 @@ from std_msgs.msg import String
 
 import time
 import random
+import json
 
 class MinimalPublisher(Node):
-
     def __init__(self):
         super().__init__('minimal_publisher')
         timer_period = 10  
@@ -36,9 +38,9 @@ class MinimalPublisher(Node):
         msg.data = message 
         self.publisher_1.publish(msg)
 
-        print(msg)
+        print("[Publisher] " + msg.data)
     
-    def timer_callback_1(self):
+    def timer_callback_2(self):
         temperature = random.uniform(15, 40)
         humidity = random.randint(30, 80)
         current = random.uniform(1, 10)
@@ -58,7 +60,7 @@ class MinimalPublisher(Node):
         msg.data = message 
         self.publisher_2.publish(msg)
 
-        print(msg)
+        print("[Publisher] " + msg.data)
 
 def main(args=None):
     rclpy.init(args=args)

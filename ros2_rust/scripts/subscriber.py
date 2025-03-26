@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import String
+import json
 
 class MinimalSubscriber(Node):
 
@@ -15,7 +18,7 @@ class MinimalSubscriber(Node):
         self.subscription  
 
     def listener_callback(self, msg):
-        print(msg)
+        print("[Subscriber] " + msg.data)
 
 def main(args=None):
     rclpy.init(args=args)
