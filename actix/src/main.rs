@@ -2,7 +2,6 @@ use actix_web::{web, App, HttpServer, HttpResponse, Responder};
 
 mod mqtt;
 mod json;
-mod ros2;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
