@@ -2,9 +2,7 @@
 ## Delete Everything
 ```
 rm -rf actix/target  
-```
 
-```
 docker stop node_ros2_container
 docker rm node_ros2_container
 docker rmi node_ros2_image
