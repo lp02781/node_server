@@ -11,15 +11,18 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .route("/node/mqtt/data", web::post().to(receive_mqtt_data))
+        .route("/node/{device}/data", web::post().to(receive_device_data))
     })
     .bind(("127.0.0.1", 5000))?
     .run()
     .await
 }
 
-async fn receive_mqtt_data(payload: web::Json<json::NodePayload>) -> impl Responder {
-    println!("Received MQTT Data: {:?}", payload);
+async fn receive_device_data( device: web::Path<String>,
+                              payload: web::Json<json::NodePayload>) 
+-> impl Responder {
+    println!("Received data for device: {}", device);
+    println!("Payload: {:?}", payload);
     
     HttpResponse::Ok().json(payload.into_inner())
 }

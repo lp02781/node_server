@@ -8,22 +8,24 @@ rm -rf actix/target
 docker stop node_ros2_container
 docker rm node_ros2_container
 docker rmi node_ros2_image
+
+docker stop node_mqtt_container
+docker rm node_mqtt_container
+docker rmi node_mqtt_image
+
+docker stop node_mosquitto_container
+docker rm node_mosquitto_container
+docker rmi eclipse-mosquitto
+
+docker rmi python:3.10-slim osrf/ros:foxy-desktop
 ```
 
-## Running Actix
+## Running 
 ```
-cd actix/
+docker-compose up -d <mosquitto> <mqtt> <ros2> <actix>
+```
+
+```
+cd actix
 cargo run
 ```
-
-## Running ROS2
-```
-docker build -t node_ros2_image .
-docker run -d --name node_ros2_container node_ros2_image
-docker exec -it node_ros2_container bash
-```
-
-## Running MQTT
-
-
-## Running Mosquitto

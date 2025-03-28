@@ -8,9 +8,11 @@ use rand::SeedableRng;
 
 use crate::json;
 
-pub async fn post_mqtt_data(payload: json::NodePayload) -> Result<(), reqwest::Error> {
+pub async fn post_device_data(payload: json::NodePayload,
+                            device: &str) 
+-> Result<(), reqwest::Error> {
     let client = reqwest::Client::new();
-    let url = "http://localhost:5000/node/mqtt/data";
+    let url = format!("http://localhost:5000/node/{}/data", device);
 
     let response = client
         .post(url)
@@ -39,7 +41,7 @@ pub async fn start_mqtt_subscriber() {
                 
                 match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
                     Ok(payload) => {
-                        if let Err(e) = post_mqtt_data(payload).await {
+                        if let Err(e) = post_device_data(payload, "mqtt_1_and_2").await {
                             eprintln!("Error sending MQTT data: {:?}", e);
                         }
                     }
@@ -95,7 +97,7 @@ pub async fn start_mqtt_publisher() {
         
         match serde_json::from_str::<json::NodePayload>(&json_data) {
             Ok(payload) => {
-                if let Err(e) = post_mqtt_data(payload).await {
+                if let Err(e) = post_device_data(payload, "mqtt_actix").await {
                     eprintln!("[publisher] Error post MQTT data: {:?}", e);
                 }
             }
