@@ -4,7 +4,7 @@
 - Docker image in [Docker hub](https://hub.docker.com/repositories/lp02781) ✅
 - Multiple docker-compose ✅
 
-## [node_server](https://github.com/lp02781/node_server)
+## node server
 - Actix backend with Rust ✅
 - Next.js frontend with React.js, Javascript, HTML, CSS
 - JSON REST API with protobuf
