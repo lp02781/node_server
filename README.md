@@ -24,14 +24,16 @@ node_mosquitto_container-> localhost:1883
 
 # Installation
 ```
-sudo chmod +x install.sh
-sudo ./install.sh
+cd deploy
+sudo chmod +x install_node_server.sh
+sudo ./install_node_server.sh
 ```
 
 # Uninstall
 ```
-sudo chmod +x uninstall.sh
-sudo ./uninstall.sh
+cd deploy
+sudo chmod +x uninstall_node_server.sh
+sudo ./uninstall_node_server.sh
 ```
 
 # Local Development
