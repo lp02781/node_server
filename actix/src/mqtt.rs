@@ -23,8 +23,8 @@ pub async fn post_device_data(payload: json::NodePayload,
     Ok(())
 } 
 
-pub async fn start_mqtt_subscriber() {
-    let mut mqttoptions = MqttOptions::new("mqtt_subscriber", "localhost", 1883);
+pub async fn start_mqtt_1_subscriber() {
+    let mut mqttoptions = MqttOptions::new("mqtt_1_subscriber", "localhost", 1883);
     let will = LastWill::new("hello/world", "good-bye", QoS::AtMostOnce, false);
     mqttoptions
         .set_keep_alive(Duration::from_secs(60))
@@ -33,7 +33,6 @@ pub async fn start_mqtt_subscriber() {
     let (client, mut connection) = Client::new(mqttoptions, 10);
 
     client.subscribe("/mqtt_1/data", QoS::AtMostOnce).unwrap();
-    client.subscribe("/mqtt_2/data", QoS::AtMostOnce).unwrap();
     
     loop {
         match connection.eventloop.poll().await {
@@ -41,7 +40,7 @@ pub async fn start_mqtt_subscriber() {
                 
                 match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
                     Ok(payload) => {
-                        if let Err(e) = post_device_data(payload, "mqtt_1_and_2").await {
+                        if let Err(e) = post_device_data(payload, "mqtt_1").await {
                             eprintln!("Error sending MQTT data: {:?}", e);
                         }
                     }
@@ -59,7 +58,42 @@ pub async fn start_mqtt_subscriber() {
     }
 }
 
-pub async fn start_mqtt_publisher() {
+pub async fn start_mqtt_2_subscriber() {
+    let mut mqttoptions = MqttOptions::new("mqtt_2_subscriber", "localhost", 1883);
+    let will = LastWill::new("hello/world", "good-bye", QoS::AtMostOnce, false);
+    mqttoptions
+        .set_keep_alive(Duration::from_secs(60))
+        .set_last_will(will);
+
+    let (client, mut connection) = Client::new(mqttoptions, 10);
+
+    client.subscribe("/mqtt_2/data", QoS::AtMostOnce).unwrap();
+    
+    loop {
+        match connection.eventloop.poll().await {
+            Ok(Event::Incoming(Packet::Publish(publish))) => {
+                
+                match serde_json::from_slice::<json::NodePayload>(&publish.payload) {
+                    Ok(payload) => {
+                        if let Err(e) = post_device_data(payload, "mqtt_2").await {
+                            eprintln!("Error sending MQTT data: {:?}", e);
+                        }
+                    }
+                    Err(e) => {
+                        eprintln!("Failed to deserialize MQTT payload: {:?}", e);
+                    }
+                }
+            }
+            Ok(_) => {}
+            Err(e) => {
+                break;
+            }
+        }
+        tokio::time::sleep(Duration::from_secs(1)).await;
+    }
+}
+
+pub async fn start_mqtt_actix_publisher() {
     let mut mqttoptions = MqttOptions::new("mqtt_publisher", "localhost", 1883);
     let will = LastWill::new("hello/world", "good-bye", QoS::AtMostOnce, false);
     mqttoptions

@@ -5,8 +5,9 @@ mod json;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
-    tokio::spawn(async {mqtt::start_mqtt_subscriber().await;});
-    tokio::spawn(async {mqtt::start_mqtt_publisher().await;});
+    tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
+    tokio::spawn(async {mqtt::start_mqtt_2_subscriber().await;});
+    tokio::spawn(async {mqtt::start_mqtt_actix_publisher().await;});
     //tokio::spawn(async {ros2::start_ros2_publisher().await;});
 
     HttpServer::new(move || {
