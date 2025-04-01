@@ -37,6 +37,17 @@ sudo ./uninstall_node_server.sh
 ```
 
 # Local Development
+
+## Running 
+```
+docker-compose up -d <mosquitto> <mqtt> <ros2> <actix>
+```
+
+```
+cd actix
+cargo run
+```
+
 ## Delete Everything
 ```
 rm -rf actix/target  
@@ -56,12 +67,3 @@ docker rmi eclipse-mosquitto
 docker rmi python:3.10-slim osrf/ros:foxy-desktop
 ```
 
-## Running 
-```
-docker-compose up -d <mosquitto> <mqtt> <ros2> <actix>
-```
-
-```
-cd actix
-cargo run
-```
