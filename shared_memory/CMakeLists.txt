@@ -23,7 +23,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 if((${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR CMAKE_COMPILER_US_GNUCXX) AND NOT CMAKE_BUILD_TYPE MATCHES "Debug")
-  add_compile_options(-03)	# Compile at optimization level 3.
+  add_compile_options(-03)	
 endif()
 
 set(CMAKE_C_FLAGS_DEBUG "-DDEBUG -DC_FLAGS")
@@ -41,27 +41,27 @@ find_package(iceoryx_posh CONFIG REQUIRED)
 find_package(iceoryx_hoofs CONFIG REQUIRED)
 get_target_property(ICEORYX_CXX_STANDARD iceoryx_posh::iceoryx_posh CXX_STANDARD)
 
-add_executable(sm_1
-    sm_1.cpp
+add_executable(sm_cpp_1
+    sm_cpp_1.cpp
 )
 
-add_executable(sm_2
-    sm_2.cpp
+add_executable(sm_cpp_2
+    sm_cpp_2.cpp
 )
 
-target_link_libraries(sm_1
+target_link_libraries(sm_cpp_1
     PRIVATE
     iceoryx_posh::iceoryx_posh
 )
 
-target_link_libraries(sm_2
+target_link_libraries(sm_cpp_2
     PRIVATE
     iceoryx_posh::iceoryx_posh
 )
 
 install(TARGETS
-  sm_1
-  sm_2
+  sm_cpp_1
+  sm_cpp_2
   DESTINATION ${pwd}
 )
 

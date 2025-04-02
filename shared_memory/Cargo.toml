@@ -1,0 +1,16 @@
+[package]
+name = "rust_pub_sub"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+iceoryx2 = "0.5.0" 
+rand = "0.8"
+
+[[bin]]
+name = "sm_rust_1"
+path = "sm_rust_1.rs"
+
+[[bin]]
+name = "sm_rust_2"
+path = "sm_rust_2.rs"
