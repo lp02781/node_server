@@ -45,13 +45,23 @@ add_executable(sm_1
     sm_1.cpp
 )
 
+add_executable(sm_2
+    sm_2.cpp
+)
+
 target_link_libraries(sm_1
+    PRIVATE
+    iceoryx_posh::iceoryx_posh
+)
+
+target_link_libraries(sm_2
     PRIVATE
     iceoryx_posh::iceoryx_posh
 )
 
 install(TARGETS
   sm_1
+  sm_2
   DESTINATION ${pwd}
 )
 

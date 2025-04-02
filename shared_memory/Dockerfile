@@ -24,6 +24,7 @@ RUN cmake --build build --target install
 
 WORKDIR /opt
 COPY sm_1.cpp /opt/
+COPY sm_2.cpp /opt/
 COPY CMakeLists.txt /opt/
 RUN mkdir -p /etc/iceoryx
 COPY roudi_config.toml /etc/iceoryx/
