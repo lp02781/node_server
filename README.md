@@ -40,7 +40,7 @@ sudo ./uninstall_node_server.sh
 
 ## Running 
 ```
-docker-compose up -d mosquitto mqtt #ros2 actix
+docker-compose up -d sm mosquitto mqtt #ros2 actix
 ```
 
 ```
@@ -64,6 +64,10 @@ docker stop node_mosquitto_container
 docker rm node_mosquitto_container
 docker rmi eclipse-mosquitto
 
-docker rmi python:3.10-slim osrf/ros:foxy-desktop
+docker stop node_sm_container
+docker rm node_sm_container
+docker rmi node_sm_image
+
+docker rmi python:3.10-slim osrf/ros:foxy-desktop ubuntu:22.04
 ```
 

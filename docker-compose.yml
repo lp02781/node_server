@@ -1,6 +1,14 @@
 version: "3.3"
 
 services:
+  sm:
+    build:
+      context: ./shared_memory  
+    image: node_sm_image 
+    container_name: node_sm_container
+    restart: unless-stopped
+    network_mode: "host"
+
   mosquitto:
     image: eclipse-mosquitto:latest
     container_name: node_mosquitto_container
