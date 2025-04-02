@@ -40,7 +40,7 @@ sudo ./uninstall_node_server.sh
 
 ## Running 
 ```
-docker-compose up -d <mosquitto> <mqtt> <ros2> <actix>
+docker-compose up -d mosquitto mqtt #ros2 actix
 ```
 
 ```
