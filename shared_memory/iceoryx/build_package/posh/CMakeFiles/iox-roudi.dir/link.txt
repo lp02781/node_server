@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/iox-roudi.dir/source/roudi/application/roudi_main.cpp.o  -o ../iox-roudi  ../hoofs/libiceoryx_hoofs.a libiceoryx_posh_roudi.a libiceoryx_posh_config.a libiceoryx_posh_roudi.a libiceoryx_posh.a ../hoofs/libiceoryx_hoofs.a ../hoofs/platform/libiceoryx_platform.a -lpthread -lacl -latomic -lpthread -lrt 

@@ -4,6 +4,7 @@ RUN apt update && apt install -y \
     cmake \
     gcc \
     g++ \
+    supervisor \
     git \
     libacl1-dev \
     libncurses5-dev \
@@ -13,24 +14,26 @@ RUN apt update && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-RUN git clone --recursive https://github.com/eclipse-iceoryx/iceoryx.git
+COPY iceoryx /opt/iceoryx
 
 WORKDIR /opt/iceoryx
-RUN cmake -Bbuild -Hiceoryx_meta -DCMAKE_INSTALL_PREFIX=/usr/local && \
-    cmake --build build && \
-    cmake --install build
+RUN cmake -Bbuild -Hiceoryx_meta
+RUN cmake -Bbuild -Hiceoryx_meta -DCMAKE_PREFIX_PATH=$(PWD)/build/dependencies/
+RUN cmake --build build
+RUN cmake --build build --target install
 
-ENV ICEORYX_INSTALL_DIR=/usr/local
+WORKDIR /opt
+COPY sm_1.cpp /opt/
+COPY CMakeLists.txt /opt/
+RUN mkdir -p /etc/iceoryx
+COPY roudi_config.toml /etc/iceoryx/
 
-#WORKDIR /opt
-#COPY sm_1.cpp /opt/sm_1.cpp
-#COPY CMakeLists.txt /opt/
+RUN mkdir -p /opt/build
+WORKDIR /opt/build
+RUN cmake ..
+RUN make
+RUN make install
 
-#RUN mkdir -p /opt/build && \
-#    cd /opt && \
-#    cmake -Bbuild -DCMAKE_PREFIX_PATH=$ICEORYX_INSTALL_DIR . && \
-#    cmake --build build && \
-#    make sm_1
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-#CMD ["/opt/build/sm_1"]
-CMD ["/usr/local/bin/iox-roudi"]
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

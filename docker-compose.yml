@@ -5,6 +5,7 @@ services:
     build:
       context: ./shared_memory  
     image: node_sm_image 
+    shm_size: '256m'
     container_name: node_sm_container
     restart: unless-stopped
     network_mode: "host"

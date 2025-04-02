@@ -1,0 +1,12 @@
+Architecture: arm64
+Depends: libacl1-dev,libncurses5-dev
+Description: iceoryx_package built using CMake
+ iceoryx inter-process-communication (IPC) middleware
+Homepage: https://github.com/eclipse-iceoryx/iceoryx
+Maintainer: https://projects.eclipse.org/projects/technology.iceoryx/who
+Package: iceoryx-2.0.3
+Priority: optional
+Section: devel
+Version: 2.0.3
+Installed-Size: 8273
+
