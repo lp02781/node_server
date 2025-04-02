@@ -12,6 +12,7 @@
 - Iceoryx shared memory communication
 - gRPC communication
 - jsonRPC communication
+- TCP/IP communication
 - Websocket communication
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
