@@ -11,6 +11,7 @@ RUN apt update && apt install -y \
     ninja-build \
     pkg-config \
     libyaml-cpp-dev \
+    nlohmann-json3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt

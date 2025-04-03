@@ -39,6 +39,7 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/ReleaseFiles/${CMAKE_BUILD_TYPE})
 
 find_package(iceoryx_posh CONFIG REQUIRED)
 find_package(iceoryx_hoofs CONFIG REQUIRED)
+find_package(nlohmann_json REQUIRED)
 get_target_property(ICEORYX_CXX_STANDARD iceoryx_posh::iceoryx_posh CXX_STANDARD)
 
 add_executable(sm_cpp_1
@@ -52,11 +53,13 @@ add_executable(sm_cpp_2
 target_link_libraries(sm_cpp_1
     PRIVATE
     iceoryx_posh::iceoryx_posh
+    nlohmann_json::nlohmann_json
 )
 
 target_link_libraries(sm_cpp_2
     PRIVATE
     iceoryx_posh::iceoryx_posh
+    nlohmann_json::nlohmann_json
 )
 
 install(TARGETS
