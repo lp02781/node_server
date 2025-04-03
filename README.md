@@ -8,6 +8,7 @@
 node_actix_container-> localhost:5000
 node_sm_cpp_container-> localhost
 node_sm_rust_container-> localhost
+node_ros2_container-> localhost
 node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
@@ -18,7 +19,7 @@ node_mosquitto_container-> localhost:1883
 - JSON REST API with protobuf
 - ROS2 rust communication
 - Iceoryx sm cpp communication ✅
-- Iceoryx sm rust communication ✅
+- Iceoryx2 sm rust communication ✅
 - gRPC communication
 - jsonRPC communication
 - TCP/IP communication
@@ -26,6 +27,7 @@ node_mosquitto_container-> localhost:1883
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
 - PostgreSql database
+- Pytorch machine learning
 
 # Installation
 ```
@@ -45,6 +47,7 @@ sudo ./uninstall_node_server.sh
 
 ## Running 
 ```
+sudo systemctl stop mosquitto
 docker-compose up -d sm_rust sm_cpp mosquitto mqtt actix 
 ```
 
@@ -76,6 +79,10 @@ docker rmi node_sm_cpp_image
 docker stop node_sm_rust_container
 docker rm node_sm_rust_container
 docker rmi node_sm_rust_image
+
+docker stop node_ros2_container
+docker rm node_ros2_container
+docker rmi node_ros2_image
 
 docker rmi python:3.10-slim osrf/ros:foxy-desktop ubuntu:22.04 rustlang/rust:nightly
 ```
