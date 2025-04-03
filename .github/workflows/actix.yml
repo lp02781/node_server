@@ -4,10 +4,14 @@ on:
   pull_request:
     branches:
       - main 
+    paths:
+      - 'actix/**' 
 
   push:
     branches:
       - main 
+    paths:
+      - 'actix/**' 
 
 jobs:
   build:

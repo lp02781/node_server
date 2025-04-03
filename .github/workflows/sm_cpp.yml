@@ -3,11 +3,15 @@ name: C++ CI/CD Pipeline
 on:
   pull_request:
     branches:
-      - main 
+      - main
+    paths:
+      - 'sm_cpp/**'  
 
   push:
     branches:
       - main 
+    paths:
+      - 'sm_cpp/**' 
 
 jobs:
   build:

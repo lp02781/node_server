@@ -4,10 +4,14 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'mqtt/**' 
   
   push:
     branches:
       - main
+    paths:
+      - 'mqtt/**' 
 
 jobs:
   build:

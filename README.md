@@ -84,6 +84,9 @@ docker stop node_ros2_container
 docker rm node_ros2_container
 docker rmi node_ros2_image
 
-docker rmi python:3.10-slim osrf/ros:foxy-desktop ubuntu:22.04 rustlang/rust:nightly
+docker rmi python:3.10-slim 
+docker rmi osrf/ros:foxy-desktop 
+docker rmi ubuntu:22.04 
+docker rmi rustlang/rust:nightly
 ```
 

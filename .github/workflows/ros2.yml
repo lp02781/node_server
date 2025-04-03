@@ -4,10 +4,14 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'ros2_rust/**' 
   
   push:
     branches:
       - main
+    paths:
+      - 'ros2_rust/**' 
 
 jobs:
   build:
