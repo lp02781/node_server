@@ -19,7 +19,8 @@
 - PostgreSql database
 ```
 node_actix_container-> localhost:5000
-node_sm_container
+node_sm_cpp_container-> localhost
+node_sm_rust_container-> localhost
 node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
