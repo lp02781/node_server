@@ -1,4 +1,4 @@
-name: Actix CI/CD pipeline
+name: sm_rust CI/CD pipeline
 
 on:
   pull_request:
