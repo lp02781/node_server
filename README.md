@@ -4,19 +4,6 @@
 - Docker image in [Docker hub](https://hub.docker.com/repositories/lp02781) ✅
 - Multiple docker-compose ✅
 
-## node server
-- Actix backend with Rust ✅
-- Next.js frontend with React.js, Javascript, HTML, CSS
-- JSON REST API with protobuf
-- ROS2 rust communication
-- Iceoryx shared memory communication
-- gRPC communication
-- jsonRPC communication
-- TCP/IP communication
-- Websocket communication
-- MQTT IoT rust communication ✅
-- MQTT IoT broker Mosquitto ✅
-- PostgreSql database
 ```
 node_actix_container-> localhost:5000
 node_sm_cpp_container-> localhost
@@ -24,6 +11,21 @@ node_sm_rust_container-> localhost
 node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
+
+## node server
+- Actix backend with Rust ✅
+- Next.js frontend with React.js, Javascript, HTML, CSS
+- JSON REST API with protobuf
+- ROS2 rust communication
+- Iceoryx sm cpp communication ✅
+- Iceoryx sm rust communication ✅
+- gRPC communication
+- jsonRPC communication
+- TCP/IP communication
+- Websocket communication
+- MQTT IoT rust communication ✅
+- MQTT IoT broker Mosquitto ✅
+- PostgreSql database
 
 # Installation
 ```
@@ -43,7 +45,7 @@ sudo ./uninstall_node_server.sh
 
 ## Running 
 ```
-docker-compose up -d sm mosquitto mqtt #ros2 actix
+docker-compose up -d sm_rust sm_cpp mosquitto mqtt actix 
 ```
 
 ```
@@ -55,9 +57,9 @@ cargo run
 ```
 rm -rf actix/target  
 
-docker stop node_ros2_container
-docker rm node_ros2_container
-docker rmi node_ros2_image
+docker stop node_actix_container
+docker rm node_actix_container
+docker rmi node_actix_image
 
 docker stop node_mqtt_container
 docker rm node_mqtt_container
@@ -67,10 +69,14 @@ docker stop node_mosquitto_container
 docker rm node_mosquitto_container
 docker rmi eclipse-mosquitto
 
-docker stop node_sm_container
-docker rm node_sm_container
-docker rmi node_sm_image
+docker stop node_sm_cpp_container
+docker rm node_sm_cpp_container
+docker rmi node_sm_cpp_image
 
-docker rmi python:3.10-slim osrf/ros:foxy-desktop ubuntu:22.04
+docker stop node_sm_rust_container
+docker rm node_sm_rust_container
+docker rmi node_sm_rust_image
+
+docker rmi python:3.10-slim osrf/ros:foxy-desktop ubuntu:22.04 rustlang/rust:nightly
 ```
 

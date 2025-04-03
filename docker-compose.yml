@@ -1,12 +1,21 @@
 version: "3.3"
 
 services:
-  sm:
+  sm_cpp:
     build:
-      context: ./shared_memory  
-    image: node_sm_image 
+      context: ./sm_cpp  
+    image: node_sm_cpp_image 
     shm_size: '256m'
-    container_name: node_sm_container
+    container_name: node_sm_cpp_container
+    restart: unless-stopped
+    network_mode: "host"
+  
+  sm_rust:
+    build:
+      context: ./sm_rust  
+    image: node_sm_rust_image 
+    shm_size: '256m'
+    container_name: node_sm_rust_container
     restart: unless-stopped
     network_mode: "host"
 

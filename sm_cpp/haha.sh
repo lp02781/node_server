@@ -46,4 +46,4 @@ sudo cp roudi_config.toml /etc/iceoryx/
 #./build/Release/sm_cpp_1
 #./build/Release/sm_cpp_2
 
-#cargo run --bin sm_rust_1 & cargo run --bin sm_rust_2
+
