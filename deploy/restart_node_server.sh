@@ -4,7 +4,7 @@ set -x
 GREEN='\e[32m'
 
 echo "${GREEN}Restart container${NC}"
-docker restart node_sm_rust_container
+#docker restart node_sm_rust_container
 docker restart node_sm_cpp_container
 docker restart node_mosquitto_container
 docker restart node_mqtt_container
