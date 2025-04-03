@@ -3,10 +3,6 @@ set -x
 
 GREEN='\e[32m'
 
-echo "${GREEN}Install dependencies${NC}"
-sudo apt install mosquitto -y
-sudo apt install mosquitto-clients -y
-
 echo "${GREEN}Uninstall first${NC}"
 sudo ./uninstall_node_server.sh
 
