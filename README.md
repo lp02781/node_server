@@ -24,7 +24,7 @@ node_mosquitto_container-> localhost:1883
 - Pytorch machine learning
 
 ## node server
-- Actix serever with Rust ✅
+- Actix server with Rust ✅
 - ROS2 rust communication
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
