@@ -3,6 +3,7 @@
 - CI/CD pipeline Github ✅
 - Docker image in [Docker hub](https://hub.docker.com/repositories/lp02781) ✅
 - Multiple docker-compose ✅
+- JSON REST API with protobuf
 
 ```
 node_actix_container-> localhost:5000
@@ -13,10 +14,17 @@ node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
 
+## interface server
+- Node.js server with Javascript
+- Next.js frontend with React.js, Javascript, HTML, CSS 
+
+## databse server
+- Django server with Python
+- PostgreSql database
+- Pytorch machine learning
+
 ## node server
-- Actix backend with Rust ✅
-- Next.js frontend with React.js, Javascript, HTML, CSS
-- JSON REST API with protobuf
+- Actix serever with Rust ✅
 - ROS2 rust communication
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
@@ -26,8 +34,6 @@ node_mosquitto_container-> localhost:1883
 - Websocket communication
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
-- PostgreSql database
-- Pytorch machine learning
 
 # Installation
 ```
