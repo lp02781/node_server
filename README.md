@@ -31,7 +31,7 @@ node_mosquitto_container-> localhost:1883
 - Iceoryx2 sm rust communication ✅
 - gRPC communication
 - jsonRPC communication
-- TCP/IP communication (on progress)
+- TCP/IP communication ✅
 - Websocket communication
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
