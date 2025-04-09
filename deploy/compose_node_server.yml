@@ -1,6 +1,12 @@
 version: "3.3"
 
 services:
+  tcp:
+    image: lp02781/node_tcp_image 
+    container_name: node_tcp_container
+    restart: unless-stopped
+    network_mode: "host"
+
   sm_cpp:  
     image: lp02781/node_sm_cpp_image 
     shm_size: '256m'

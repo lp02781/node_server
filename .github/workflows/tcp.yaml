@@ -1,0 +1,58 @@
+name: tcp CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'tcp/**'  
+
+  push:
+    branches:
+      - main 
+    paths:
+      - 'tcp/**' 
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake gcc g++ pkg-config \
+                              nlohmann-json3-dev
+
+  deploy_docker:
+    needs: build
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image
+        run: |
+          cd tcp
+          docker build -t node_tcp_image:latest .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Image
+        run: |
+          docker tag node_tcp_image:latest lp02781/node_tcp_image:latest
+          docker push lp02781/node_tcp_image:latest
+
+      - name: Deploy to Production
+        run: |
+          echo "Deploying the Docker image to production Docker Hub"

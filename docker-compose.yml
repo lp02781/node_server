@@ -1,6 +1,14 @@
 version: "3.3"
 
 services:
+  tcp:
+    build:
+      context: ./tcp  
+    image: node_tcp_image 
+    container_name: node_tcp_container
+    restart: unless-stopped
+    network_mode: "host"
+
   sm_cpp:
     build:
       context: ./sm_cpp  

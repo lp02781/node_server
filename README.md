@@ -7,6 +7,7 @@
 
 ```
 node_actix_container-> localhost:5000
+node_tcp_container-> localhost:65432
 node_sm_cpp_container-> localhost
 node_sm_rust_container-> localhost
 node_ros2_container-> localhost
@@ -25,12 +26,12 @@ node_mosquitto_container-> localhost:1883
 
 ## node server
 - Actix server with Rust ✅
-- ROS2 rust communication
+- ROS2 rust communication (Humble)
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
 - gRPC communication
 - jsonRPC communication
-- TCP/IP communication
+- TCP/IP communication (on progress)
 - Websocket communication
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
@@ -54,7 +55,7 @@ sudo ./uninstall_node_server.sh
 ## Running 
 ```
 sudo systemctl stop mosquitto
-docker-compose up -d sm_rust sm_cpp mosquitto mqtt actix 
+docker-compose up -d tcp sm_rust sm_cpp mosquitto mqtt actix 
 ```
 
 ```
@@ -69,6 +70,10 @@ rm -rf actix/target
 docker stop node_actix_container
 docker rm node_actix_container
 docker rmi node_actix_image
+
+docker stop node_tcp_container
+docker rm node_tcp_container
+docker rmi node_tcp_image
 
 docker stop node_mqtt_container
 docker rm node_mqtt_container

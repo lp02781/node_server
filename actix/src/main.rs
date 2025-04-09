@@ -2,12 +2,14 @@ use actix_web::{web, App, HttpServer, HttpResponse, Responder};
 
 mod mqtt;
 mod json;
+mod tcp;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
     tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
     tokio::spawn(async {mqtt::start_mqtt_2_subscriber().await;});
     tokio::spawn(async {mqtt::start_mqtt_actix_publisher().await;});
+    tokio::spawn(async {tcp::start_tcp_actix().await;});
     //tokio::spawn(async {ros2::start_ros2_publisher().await;});
 
     HttpServer::new(move || {
