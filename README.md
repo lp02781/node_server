@@ -19,7 +19,7 @@ node_mosquitto_container-> localhost:1883
 - Node.js server with Javascript
 - Next.js frontend with React.js, Javascript, HTML, CSS 
 
-## databse server
+## database server
 - Django server with Python
 - PostgreSql database
 - Pytorch machine learning
