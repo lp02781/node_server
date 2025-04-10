@@ -28,9 +28,9 @@ node_mosquitto_container-> localhost:1883
 - ROS2 rust communication (Humble)
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
-- jsonRPC with protobuf communication
-- TCP/IP communication ✅
+- jsonRPC communication
 - Websocket communication
+- TCP/IP communication ✅
 - MQTT IoT rust communication ✅
 - MQTT IoT broker Mosquitto ✅
 
