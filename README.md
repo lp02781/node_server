@@ -3,8 +3,7 @@
 - CI/CD pipeline Github ✅
 - Docker image in [Docker hub](https://hub.docker.com/repositories/lp02781) ✅
 - Multiple docker-compose ✅
-- JSON REST API with protobuf
-
+- JSON REST API ✅
 ```
 node_actix_container-> localhost:5000
 node_tcp_container-> localhost:65432
@@ -29,8 +28,7 @@ node_mosquitto_container-> localhost:1883
 - ROS2 rust communication (Humble)
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
-- gRPC communication
-- jsonRPC communication
+- jsonRPC with protobuf communication
 - TCP/IP communication ✅
 - Websocket communication
 - MQTT IoT rust communication ✅
