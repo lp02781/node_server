@@ -25,7 +25,7 @@ node_mosquitto_container-> localhost:1883
 
 ## node server
 - Actix server with Rust ✅
-- ROS2 rust communication (Humble)
+- ROS2 rust communication (Humble) ✅
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
 - TCP/IP communication ✅
