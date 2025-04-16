@@ -4,15 +4,6 @@
 - Docker image in [Docker hub](https://hub.docker.com/repositories/lp02781) ✅
 - Multiple docker-compose ✅
 - JSON REST API ✅
-```
-node_actix_container-> localhost:5000
-node_tcp_container-> localhost:65432
-node_sm_cpp_container-> localhost
-node_sm_rust_container-> localhost
-node_ros2_container-> localhost
-node_mqtt_container-> localhost:1883
-node_mosquitto_container-> localhost:1883
-```
 
 ## interface server
 - Node.js server with Javascript
@@ -24,6 +15,15 @@ node_mosquitto_container-> localhost:1883
 - Pytorch machine learning
 
 ## node server
+```
+node_actix_container-> localhost:5000
+node_tcp_container-> localhost:65432
+node_sm_cpp_container-> localhost
+node_sm_rust_container-> localhost
+node_ros2_container-> localhost
+node_mqtt_container-> localhost:1883
+node_mosquitto_container-> localhost:1883
+```
 - Actix server with Rust ✅
 - ROS2 rust communication (Humble) ✅
 - Iceoryx sm cpp communication ✅
