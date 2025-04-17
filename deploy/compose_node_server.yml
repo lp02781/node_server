@@ -1,6 +1,12 @@
 version: "3.3"
 
 services:
+  websocket:
+    image: lp02781/node_websocket_image
+    container_name: node_websocket_container
+    restart: unless-stopped  
+    network_mode: "host" 
+
   tcp:
     image: lp02781/node_tcp_image 
     container_name: node_tcp_container
