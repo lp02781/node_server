@@ -5,10 +5,6 @@
 - Multiple docker-compose ✅
 - JSON REST API ✅
 
-## interface server
-- Node.js server with Javascript
-- Next.js frontend with React.js, Javascript, HTML, CSS 
-
 ## node server
 ```
 node_actix_container-> localhost:5000
@@ -21,6 +17,7 @@ node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
 - Actix server with Rust ✅
+- Next.js frontend with React.js, Javascript, HTML, CSS 
 - PostgreSql database
 - ROS2 rust communication (Humble) ✅
 - Iceoryx sm cpp communication ✅
