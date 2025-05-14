@@ -16,9 +16,12 @@ node_ros2_container-> localhost
 node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
-- Actix server with Rust ✅
-- Next.js frontend with React.js, Javascript, HTML, CSS 
+- Next.js frontend with React.js, Javascript, HTML, CSS
+- SvelteKit frontend
+- Leptos WASM frontend 
 - PostgreSql database
+
+- Actix server with Rust ✅
 - ROS2 rust communication (Humble) ✅
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
