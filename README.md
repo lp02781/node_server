@@ -18,7 +18,7 @@ node_mosquitto_container-> localhost:1883
 ```
 - Next.js frontend with React.js, Javascript, HTML, CSS
 - SvelteKit frontend
-- Leptos WASM frontend 
+- Leptos C++ WASM frontend 
 - PostgreSql database
 
 - Actix server with Rust ✅
