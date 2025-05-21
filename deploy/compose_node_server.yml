@@ -33,12 +33,6 @@ services:
     restart: unless-stopped
     network_mode: "host"
 
-  ros2:
-    image: lp02781/node_ros2_image
-    container_name: node_ros2_container
-    restart: unless-stopped  
-    network_mode: "host" 
-
   mqtt:
     image: lp02781/node_mqtt_image
     container_name: node_mqtt_container

@@ -42,14 +42,6 @@ services:
     container_name: node_sm_rust_container
     restart: unless-stopped
     network_mode: "host"
-
-  ros2:
-    build:
-      context: ./ros2_rust  
-    image: node_ros2_image 
-    container_name: node_ros2_container
-    restart: unless-stopped
-    network_mode: "host"
     
   mqtt:
     build:

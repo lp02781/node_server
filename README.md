@@ -12,7 +12,6 @@ node_websocket_container-> localhost:5000
 node_tcp_container-> localhost:65432        
 node_sm_cpp_container-> localhost          
 node_sm_rust_container-> localhost          
-node_ros2_container-> localhost             
 node_mqtt_container-> localhost:1883        
 node_mosquitto_container-> localhost:1883 
 ```
@@ -26,7 +25,6 @@ node_mosquitto_container-> localhost:1883
 - TCP/IP communication ✅
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
-- ROS2 rust communication (Humble) ✅
 - IoT MQTT rust communication ✅
 - IoT MQTT broker Mosquitto ✅
 
@@ -49,5 +47,5 @@ sudo ./uninstall_node_server.sh
 ## Running 
 ```
 sudo systemctl stop mosquitto
-docker-compose up -d actix websocket tcp sm_cpp sm_rust ros2 mqtt mosquitto
+docker-compose up -d actix websocket tcp sm_cpp sm_rust mqtt mosquitto
 ```
