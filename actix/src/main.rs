@@ -6,7 +6,7 @@ use dotenv::dotenv;
 
 mod json;
 mod websocket;
-mod send_postgres;
+mod postgresql;
 //mod mqtt;
 //mod tcp;
 
@@ -45,7 +45,7 @@ async fn receive_device_data(device: web::Path<String>, payload: web::Json<json:
     
     println!("\n Received data for device: '{}'", device.as_str());
 
-    match send_postgres::send_database(table_name, data.clone(), db_pool.get_ref()).await {
+    match postgresql::send_database(table_name, data.clone(), db_pool.get_ref()).await {
         Ok(_) => println!("Successfully inserted data into table '{}'", table_name),
         Err(e) => {
             eprintln!("Database insert error for table '{}': {}", table_name, e);
@@ -53,7 +53,7 @@ async fn receive_device_data(device: web::Path<String>, payload: web::Json<json:
         }
     }
     
-    match send_postgres::prune_old_rows(table_name, db_pool.get_ref()).await {
+    match postgresql::prune_old_rows(table_name, db_pool.get_ref()).await {
         Ok(_) => println!("Successfully pruned old rows for table '{}'", table_name),
         Err(e) => eprintln!("Prune error for table '{}': {}", table_name, e),
     }
