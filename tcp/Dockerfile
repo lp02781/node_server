@@ -7,6 +7,7 @@ RUN apt install -y \
     g++ \
     supervisor \
     pkg-config \
+    libboost-all-dev \
     nlohmann-json3-dev 
 
 RUN rm -rf /var/lib/apt/lists/*

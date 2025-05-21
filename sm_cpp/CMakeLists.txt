@@ -42,29 +42,28 @@ find_package(iceoryx_hoofs CONFIG REQUIRED)
 find_package(nlohmann_json REQUIRED)
 get_target_property(ICEORYX_CXX_STANDARD iceoryx_posh::iceoryx_posh CXX_STANDARD)
 
-add_executable(sm_cpp_1
-    sm_cpp_1.cpp
+add_executable(sm_cpp_pub
+  sm_cpp_pub.cpp
 )
 
-add_executable(sm_cpp_2
-    sm_cpp_2.cpp
+add_executable(sm_cpp_sub
+  sm_cpp_sub.cpp
 )
 
-target_link_libraries(sm_cpp_1
+target_link_libraries(sm_cpp_pub
     PRIVATE
     iceoryx_posh::iceoryx_posh
-    nlohmann_json::nlohmann_json
 )
 
-target_link_libraries(sm_cpp_2
+target_link_libraries(sm_cpp_sub
     PRIVATE
     iceoryx_posh::iceoryx_posh
     nlohmann_json::nlohmann_json
 )
 
 install(TARGETS
-  sm_cpp_1
-  sm_cpp_2
+  sm_cpp_pub
+  sm_cpp_sub
   DESTINATION ${pwd}
 )
 

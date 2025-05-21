@@ -47,8 +47,8 @@ int main() {
         if (sock < 0) {
             sock = create_connection();
             if (sock < 0) {
-                std::cerr << "Retrying connection in 5 seconds...\n";
-                std::this_thread::sleep_for(std::chrono::seconds(5));
+                std::cerr << "[tcp_client] Retrying connection in 10 seconds...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(10));
                 continue;
             }
         }
@@ -71,7 +71,7 @@ int main() {
 
         ssize_t sent = send(sock, message.c_str(), message.size(), 0);
         if (sent < 0) {
-            std::cerr << "Send failed, reconnecting...\n";
+            std::cerr << "[tcp_client] Send failed, reconnecting...\n";
             close(sock);
             sock = -1;
             continue;
@@ -84,16 +84,16 @@ int main() {
             buffer[bytes] = '\0';
             std::cout << "[tcp_client] Received: " << buffer << std::endl;
         } else if (bytes == 0) {
-            std::cerr << "Server closed connection\n";
+            std::cerr << "[tcp_client] Server closed connection\n";
             close(sock);
             sock = -1;
         } else {
-            std::cerr << "Receive error\n";
+            std::cerr << "[tcp_client] Receive error\n";
             close(sock);
             sock = -1;
         }
 
-        std::this_thread::sleep_for(std::chrono::seconds(7));
+        std::this_thread::sleep_for(std::chrono::seconds(10));
     }
 
     return 0;

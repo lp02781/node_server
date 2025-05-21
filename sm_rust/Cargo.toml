@@ -11,9 +11,9 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 
 [[bin]]
-name = "sm_rust_1"
-path = "sm_rust_1.rs"
+name = "sm_rust_pub"
+path = "sm_rust_pub.rs"
 
 [[bin]]
-name = "sm_rust_2"
-path = "sm_rust_2.rs"
+name = "sm_rust_sub"
+path = "sm_rust_sub.rs"

@@ -27,7 +27,7 @@ async fn main() -> std::io::Result<()> {
 async fn receive_device_data( device: web::Path<String>,
                               payload: web::Json<json::NodePayload>) 
 -> impl Responder {
-    println!("Received data for device: {}", device);
+    println!("\nReceived data for device: {}", device);
     println!("Payload: {:?}", payload);
     
     HttpResponse::Ok().json(payload.into_inner())

@@ -43,7 +43,7 @@ sudo mkdir -p /etc/iceoryx
 sudo cp roudi_config.toml /etc/iceoryx/
 
 #./iceoryx/build/iox-roudi
-#./build/Release/sm_cpp_1
-#./build/Release/sm_cpp_2
+#./build/Release/sm_cpp_pub
+#./build/Release/sm_cpp_sub
 
 

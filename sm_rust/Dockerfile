@@ -10,8 +10,8 @@ RUN apt update && apt install -y \
 
 ENV LIBCLANG_PATH=/usr/lib/llvm-14/lib/
 
-COPY Cargo.toml sm_rust_1.rs sm_rust_2.rs ./
+COPY Cargo.toml sm_rust_pub.rs sm_rust_sub.rs ./
 
 RUN cargo build --release
 
-CMD ["sh", "-c", "cargo run --release --bin sm_rust_1 & cargo run --release --bin sm_rust_2 && wait"]
+CMD ["sh", "-c", "cargo run --release --bin sm_rust_pub & cargo run --release --bin sm_rust_sub && wait"]

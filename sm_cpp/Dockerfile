@@ -27,8 +27,8 @@ RUN cmake --build build
 RUN cmake --build build --target install
 
 WORKDIR /opt
-COPY sm_cpp_1.cpp /opt/
-COPY sm_cpp_2.cpp /opt/
+COPY sm_cpp_pub.cpp /opt/
+COPY sm_cpp_sub.cpp /opt/
 COPY CMakeLists.txt /opt/
 
 RUN mkdir -p /etc/iceoryx
