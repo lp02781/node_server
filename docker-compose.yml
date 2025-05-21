@@ -1,6 +1,14 @@
 version: "3.3"
 
 services:
+  actix:
+    build:
+      context: ./actix  
+    image: node_actix_image 
+    container_name: node_actix_container
+    restart: unless-stopped
+    network_mode: "host"
+
   websocket:
     build:
       context: ./websocket  
@@ -35,12 +43,14 @@ services:
     restart: unless-stopped
     network_mode: "host"
 
-  mosquitto:
-    image: eclipse-mosquitto:latest
-    container_name: node_mosquitto_container
+  ros2:
+    build:
+      context: ./ros2_rust  
+    image: node_ros2_image 
+    container_name: node_ros2_container
     restart: unless-stopped
     network_mode: "host"
-
+    
   mqtt:
     build:
       context: ./mqtt  
@@ -49,19 +59,12 @@ services:
     restart: unless-stopped
     network_mode: "host"
 
-  ros2:
-    build:
-      context: ./ros2_rust  
-    image: node_ros2_image 
-    container_name: node_ros2_container
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: node_mosquitto_container
     restart: unless-stopped
     network_mode: "host"
+  
 
-  actix:
-    build:
-      context: ./actix  
-    image: node_actix_image 
-    container_name: node_actix_container
-    restart: unless-stopped
-    network_mode: "host"
+  
     

@@ -7,14 +7,14 @@
 
 ## node server
 ```
-node_actix_container-> localhost:5000
-node_websocket_container-> localhost:5000
-node_tcp_container-> localhost:65432
-node_sm_cpp_container-> localhost
-node_sm_rust_container-> localhost
-node_ros2_container-> localhost
-node_mqtt_container-> localhost:1883
-node_mosquitto_container-> localhost:1883
+node_actix_container-> localhost:5000       T=10
+node_websocket_container-> localhost:5000   T=8   
+node_tcp_container-> localhost:65432        T=7
+node_sm_cpp_container-> localhost           T=6
+node_sm_rust_container-> localhost          T=5
+node_ros2_container-> localhost             T=4
+node_mqtt_container-> localhost:1883        T=3
+node_mosquitto_container-> localhost:1883 
 ```
 
 - Actix server with Rust ✅
