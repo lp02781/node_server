@@ -53,7 +53,7 @@ try:
         client.publish(publish_topic, message)
         print(f"Published to {publish_topic}: {message}")
 
-        time.sleep(10)
+        time.sleep(3)
         
 except KeyboardInterrupt:
     print("Stopping MQTT client...")

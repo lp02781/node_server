@@ -78,7 +78,7 @@ int main() {
             std::cout << "[sm_cpp_1] Received current: " << **sample << std::endl;
         }
 
-        std::this_thread::sleep_for(std::chrono::seconds(10)); 
+        std::this_thread::sleep_for(std::chrono::seconds(6)); 
     }
 
     return 0;

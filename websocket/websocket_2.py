@@ -24,7 +24,7 @@ async def send_sensor_data(websocket):
         message = json.dumps(sensor_data)
         await websocket.send(message)
         print(f"Sent: {message}")
-        await asyncio.sleep(10)
+        await asyncio.sleep(8)
 
 async def receive_data(websocket):
     async for message in websocket:

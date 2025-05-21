@@ -12,7 +12,7 @@ import json
 class MinimalPublisher(Node):
     def __init__(self):
         super().__init__('minimal_publisher')
-        timer_period = 10  
+        timer_period = 4  
         self.publisher_1 = self.create_publisher(String, '/ros2_1/data', 10)
         self.publisher_2 = self.create_publisher(String, '/ros2_2/data', 10)
         self.timer1 = self.create_timer(timer_period, self.timer_callback_1)

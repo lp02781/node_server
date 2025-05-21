@@ -5,7 +5,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use reqwest::blocking::Client;
 use serde_json::json;
 
-const CYCLE_TIME: Duration = Duration::from_secs(10);
+const CYCLE_TIME: Duration = Duration::from_secs(5);
 const REST_API_URL: &str = "http://localhost:5000/node/sm_rust_2/data";
 
 fn main() -> Result<(), Box<dyn core::error::Error>> {
