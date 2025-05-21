@@ -13,7 +13,8 @@ node_tcp_container-> localhost:65432
 node_sm_cpp_container-> localhost          
 node_sm_rust_container-> localhost          
 node_mqtt_container-> localhost:1883        
-node_mosquitto_container-> localhost:1883 
+node_mosquitto_container-> localhost:1883
+node_postgres_container-> localhost:5432 
 ```
 
 - Actix server with Rust ✅
@@ -26,7 +27,7 @@ node_mosquitto_container-> localhost:1883
 - Iceoryx2 sm rust communication ✅
 - IoT MQTT rust communication ✅
 - IoT MQTT broker Mosquitto ✅
-- PostgreSql database
+- PostgreSql database ✅
 
 # Installation
 ```
