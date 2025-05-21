@@ -1,7 +1,6 @@
 set -e
 set -x
 
-
 docker stop node_actix_container || true
 docker stop node_websocket_container || true
 docker stop node_tcp_container || true
