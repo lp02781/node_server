@@ -1,4 +1,7 @@
-async fn send_database(table_name: &str, payload: json::NodePayload, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
+use crate::json;
+const ALLOWED_TABLES: &[&str] = &["websocket", "tcp", "sm_cpp", "sm_rust", "mqtt"];
+
+pub async fn send_database(table_name: &str, payload: json::NodePayload, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
     if !ALLOWED_TABLES.contains(&table_name) {
         return Err(sqlx::Error::RowNotFound); 
     }
@@ -18,7 +21,7 @@ async fn send_database(table_name: &str, payload: json::NodePayload, db_pool: &s
     Ok(())
 }
 
-async fn prune_old_rows(table_name: &str, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
+pub async fn prune_old_rows(table_name: &str, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
     if !ALLOWED_TABLES.contains(&table_name) {
         return Err(sqlx::Error::RowNotFound); 
     }

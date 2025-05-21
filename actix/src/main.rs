@@ -10,8 +10,6 @@ mod postgresql;
 //mod mqtt;
 //mod tcp;
 
-const ALLOWED_TABLES: &[&str] = &["websocket", "tcp", "sm_cpp", "sm_rust", "mqtt"];
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
     //tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
@@ -39,11 +37,12 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-async fn receive_device_data(device: web::Path<String>, payload: web::Json<json::NodePayload>, db_pool: web::Data<sqlx::PgPool>,) -> impl Responder {
+async fn receive_device_data(device: web::Path<String>, payload: web::Json<json::NodePayload>, db_pool: web::Data<sqlx::PgPool>,
+) -> impl Responder {
     let data = payload.into_inner();
-    let table_name = payload.id.as_str();
-    
-    println!("\n Received data for device: '{}'", device.as_str());
+    let table_name = data.id.as_str();
+
+    println!("\nReceived data for device: '{}'", device.as_str());
 
     match postgresql::send_database(table_name, data.clone(), db_pool.get_ref()).await {
         Ok(_) => println!("Successfully inserted data into table '{}'", table_name),
@@ -52,22 +51,21 @@ async fn receive_device_data(device: web::Path<String>, payload: web::Json<json:
             return HttpResponse::InternalServerError().body("Failed to store data");
         }
     }
-    
+
     match postgresql::prune_old_rows(table_name, db_pool.get_ref()).await {
         Ok(_) => println!("Successfully pruned old rows for table '{}'", table_name),
         Err(e) => eprintln!("Prune error for table '{}': {}", table_name, e),
     }
-    
-    HttpResponse::Ok().json({
-        serde_json::json!({
-            "status": "success",
-            "message": format!("Data stored for device/table '{}'", table_name),
-            "data": data
-        })
-    })
+
+    HttpResponse::Ok().json(serde_json::json!({
+        "status": "success",
+        "message": format!("Data stored for device/table '{}'", table_name),
+        "data": data
+    }))
 }
 
-async fn websocket_handler(req: HttpRequest, stream: web::Payload, device: web::Path<String>,) -> actix_web::Result<HttpResponse> {
+async fn websocket_handler(req: HttpRequest, stream: web::Payload, device: web::Path<String>,
+) -> actix_web::Result<HttpResponse> {
     let device_id = device.into_inner();
     let ws = websocket::WebSocketSession { device_id };
     ws::start(ws, &req, stream)
