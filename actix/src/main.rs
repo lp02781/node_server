@@ -10,6 +10,8 @@ mod postgresql;
 //mod mqtt;
 //mod tcp;
 
+let db_url = "postgres://admin_haha:pasword_haha@localhost:5432/db_haha";
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
     //tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
@@ -22,7 +24,7 @@ async fn main() -> std::io::Result<()> {
 
     let db_pool = PgPoolOptions::new()
         .max_connections(5)
-        .connect(&env::var("DATABASE_URL").expect("DATABASE_URL must be set"))
+        .connect(db_url)
         .await
         .expect("Failed to connect to the database");
 
