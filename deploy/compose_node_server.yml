@@ -45,5 +45,15 @@ services:
     restart: unless-stopped
     network_mode: "host"
   
+  postgres:
+    image: postgres:latest
+    container_name: node_postgres_container
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin_haha
+      POSTGRES_PASSWORD: pasword_haha
+      POSTGRES_DB: db_haha
+    ports:
+      - "5432:5432"
   
     
