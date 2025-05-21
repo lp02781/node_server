@@ -2,8 +2,7 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY websocket_1.py .
-COPY websocket_2.py .
+COPY websocket.py .
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN pip install --upgrade pip

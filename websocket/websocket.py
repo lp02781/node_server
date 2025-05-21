@@ -12,7 +12,7 @@ async def send_sensor_data(websocket):
         humidity = random.randint(30, 80)
         current = random.uniform(1, 10)
         sensor_data = {
-            "id": "websocket_2",
+            "id": "websocket",
             "timestamp": time.time(),
             "data": {
                 "temperature": temperature,
