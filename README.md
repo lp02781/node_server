@@ -36,6 +36,24 @@ sudo chmod +x install_node_server.sh
 sudo ./install_node_server.sh
 ```
 
+# Configure database
+```
+docker exec -it node_postgres_container psql -U admin_haha -d db_haha
+```
+
+```
+CREATE TABLE websocket (timestamp DOUBLE PRECISION, temperature REAL, humidity INTEGER, current REAL);
+CREATE TABLE tcp (timestamp DOUBLE PRECISION, temperature REAL, humidity INTEGER, current REAL);
+CREATE TABLE sm_cpp (timestamp DOUBLE PRECISION, temperature REAL, humidity INTEGER, current REAL);
+CREATE TABLE sm_rust (timestamp DOUBLE PRECISION, temperature REAL, humidity INTEGER, current REAL);
+CREATE TABLE mqtt (timestamp DOUBLE PRECISION, temperature REAL, humidity INTEGER, current REAL);
+```
+
+```
+\dt
+\d mqtt
+```
+
 # Uninstall
 ```
 cd deploy
