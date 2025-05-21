@@ -27,7 +27,7 @@ node_postgres_container-> localhost:5432
 - Iceoryx2 sm rust communication ✅
 - IoT MQTT rust communication ✅
 - IoT MQTT broker Mosquitto ✅
-- PostgreSql database ✅
+- PostgreSQL database ✅
 
 # Installation
 ```
