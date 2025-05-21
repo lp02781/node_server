@@ -16,19 +16,19 @@ node_ros2_container-> localhost
 node_mqtt_container-> localhost:1883
 node_mosquitto_container-> localhost:1883
 ```
+
+- Actix server with Rust ✅
 - Next.js frontend with React.js, Javascript, HTML, CSS
 - SvelteKit frontend
 - Leptos C++ WASM frontend 
 - PostgreSql database
-
-- Actix server with Rust ✅
-- ROS2 rust communication (Humble) ✅
+- Websocket communication ✅
+- TCP/IP communication ✅
 - Iceoryx sm cpp communication ✅
 - Iceoryx2 sm rust communication ✅
-- TCP/IP communication ✅
-- Websocket communication ✅
-- MQTT IoT rust communication ✅
-- MQTT IoT broker Mosquitto ✅
+- ROS2 rust communication (Humble) ✅
+- IoT MQTT rust communication ✅
+- IoT MQTT broker Mosquitto ✅
 
 # Installation
 ```
@@ -49,5 +49,5 @@ sudo ./uninstall_node_server.sh
 ## Running 
 ```
 sudo systemctl stop mosquitto
-docker-compose up -d websocket tcp sm_rust sm_cpp mosquitto mqtt ros2 actix 
+docker-compose up -d actix websocket tcp sm_cpp sm_rust ros2 mqtt mosquitto
 ```
