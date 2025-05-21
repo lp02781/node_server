@@ -6,13 +6,35 @@ mod json;
 mod tcp;
 mod websocket;
 
+use std::panic::AssertUnwindSafe;
+use futures::FutureExt;
+
+fn spawn_with_restart<Fut>(task_fn: fn() -> Fut, name: &'static str)
+where
+    Fut: std::future::Future<Output = ()> + Send + 'static,
+{
+    tokio::spawn(async move {
+        loop {
+            let res = AssertUnwindSafe(task_fn()).catch_unwind().await;
+            match res {
+                Ok(_) => {
+                    eprintln!("{} task exited normally, restarting...", name);
+                }
+                Err(e) => {
+                    eprintln!("{} task panicked: {:?}, restarting...", name, e);
+                }
+            }
+            tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+        }
+    });
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let _ = tokio::spawn(mqtt::start_mqtt_1_subscriber());
-    let _ = tokio::spawn(mqtt::start_mqtt_2_subscriber());
-    let _ = tokio::spawn(mqtt::start_mqtt_actix_publisher());
-    let _ = tokio::spawn(tcp::start_tcp_actix());
-    // let _ = tokio::spawn(ros2::start_ros2_publisher()); 
+    spawn_with_restart(mqtt::start_mqtt_1_subscriber, "MQTT 1 subscriber");
+    spawn_with_restart(mqtt::start_mqtt_2_subscriber, "MQTT 2 subscriber");
+    spawn_with_restart(mqtt::start_mqtt_actix_publisher, "MQTT publisher");
+    spawn_with_restart(tcp::start_tcp_actix, "TCP");
 
     HttpServer::new(move || {
         App::new()
