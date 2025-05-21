@@ -2,11 +2,11 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY mqtt_1.py .
-COPY mqtt_2.py .
+COPY mqtt_pub.py .
+COPY mqtt_sub.py .
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN pip install --upgrade pip
-RUN pip install --upgrade paho-mqtt supervisor
+RUN pip install --upgrade paho-mqtt supervisor requests
 
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -2,9 +2,9 @@ use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest, Responder};
 use actix_web_actors::ws;
 
 mod json;
+mod websocket;
 //mod mqtt;
 //mod tcp;
-//mod websocket;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
