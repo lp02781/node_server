@@ -6,6 +6,7 @@ use dotenv::dotenv;
 
 mod json;
 mod websocket;
+mod send_postgres;
 //mod mqtt;
 //mod tcp;
 
@@ -38,72 +39,35 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-async fn send_database(table_name: &str, payload: json::NodePayload, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
-    if !ALLOWED_TABLES.contains(&table_name) {
-        return Err(sqlx::Error::Protocol("Invalid table name".into()));
-    }
-
-    let query = format!(
-        "INSERT INTO {} (id, timestamp, temperature, humidity, current) VALUES ($1, $2, $3, $4, $5)",
-        table_name
-    );
-
-    sqlx::query(&query)
-        .bind(&payload.id)
-        .bind(payload.timestamp)
-        .bind(payload.data.temperature)
-        .bind(payload.data.humidity as i32)
-        .bind(payload.data.current)
-        .execute(db_pool)
-        .await?;
-
-    prune_old_rows(table_name, db_pool).await?;
-
-    Ok(())
-}
-
-async fn prune_old_rows(table_name: &str, db_pool: &sqlx::PgPool,) -> Result<(), sqlx::Error> {
-    if !ALLOWED_TABLES.contains(&table_name) {
-        return Err(sqlx::Error::Protocol("Invalid table name".into()));
-    }
-
-    let delete_query = format!(
-        r#"
-        DELETE FROM {}
-        WHERE ctid IN (
-            SELECT ctid FROM {}
-            ORDER BY timestamp ASC
-            LIMIT (
-                SELECT GREATEST(count(*) - 1000, 0) FROM {}
-            )
-        );
-        "#,
-        table_name, table_name, table_name
-    );
-
-    sqlx::query(&delete_query)
-        .execute(db_pool)
-        .await?;
-
-    Ok(())
-}
-
-async fn receive_device_data(device: web::Path<String>, payload: web::Json<json::NodePayload>, db_pool: web::Data<sqlx::PgPool>, ) -> impl Responder {
-    let table_name = device.as_str();
+async fn receive_device_data(device: web::Path<String>, payload: web::Json<json::NodePayload>, db_pool: web::Data<sqlx::PgPool>,) -> impl Responder {
     let data = payload.into_inner();
+    let table_name = payload.id.as_str();
+    
+    println!("\n Received data for device: '{}'", device.as_str());
 
-    println!("Received data for device '{}', table '{}'", device, table_name);
-
-    if let Err(e) = send_database(table_name, data.clone(), db_pool.get_ref()).await {
-        eprintln!("Database insert error for table '{}': {}", table_name, e);
-        return HttpResponse::InternalServerError().body("Failed to store data");
+    match send_postgres::send_database(table_name, data.clone(), db_pool.get_ref()).await {
+        Ok(_) => println!("Successfully inserted data into table '{}'", table_name),
+        Err(e) => {
+            eprintln!("Database insert error for table '{}': {}", table_name, e);
+            return HttpResponse::InternalServerError().body("Failed to store data");
+        }
     }
-
-    HttpResponse::Ok().json(data)
+    
+    match send_postgres::prune_old_rows(table_name, db_pool.get_ref()).await {
+        Ok(_) => println!("Successfully pruned old rows for table '{}'", table_name),
+        Err(e) => eprintln!("Prune error for table '{}': {}", table_name, e),
+    }
+    
+    HttpResponse::Ok().json({
+        serde_json::json!({
+            "status": "success",
+            "message": format!("Data stored for device/table '{}'", table_name),
+            "data": data
+        })
+    })
 }
 
-
-async fn websocket_handler(req: HttpRequest, stream: web::Payload, device: web::Path<String>) -> actix_web::Result<HttpResponse> {
+async fn websocket_handler(req: HttpRequest, stream: web::Payload, device: web::Path<String>,) -> actix_web::Result<HttpResponse> {
     let device_id = device.into_inner();
     let ws = websocket::WebSocketSession { device_id };
     ws::start(ws, &req, stream)
