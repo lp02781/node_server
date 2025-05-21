@@ -12,11 +12,11 @@ RUN apt install -y \
 RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
-COPY tcp_1.cpp /opt/
-COPY tcp_2.cpp /opt/
+COPY tcp_client.cpp /opt/
+COPY tcp_server.cpp /opt/
 
-RUN g++ tcp_1.cpp -o tcp_1 -std=c++11
-RUN g++ tcp_2.cpp -o tcp_2 -std=c++11
+RUN g++ tcp_client.cpp -o tcp_client -std=c++11
+RUN g++ tcp_server.cpp -o tcp_server -std=c++11
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 

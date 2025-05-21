@@ -29,7 +29,7 @@ int create_connection() {
         return -1;
     }
 
-    std::cout << "[tcp_2] Connected to server.\n";
+    std::cout << "[tcp_client] Connected to server.\n";
     return sock;
 }
 
@@ -58,7 +58,7 @@ int main() {
         float current = current_dist(gen);
 
         nlohmann::json sensor_data = {
-            {"id", "tcp_2"},
+            {"id", "tcp"},
             {"timestamp", std::time(nullptr)},
             {"data", {
                 {"temperature", temperature},
@@ -77,12 +77,12 @@ int main() {
             continue;
         }
 
-        std::cout << "[tcp_2] Sent: " << message << std::endl;
+        std::cout << "[tcp_client] Sent: " << message << std::endl;
 
         ssize_t bytes = recv(sock, buffer, BUFFER_SIZE - 1, 0);
         if (bytes > 0) {
             buffer[bytes] = '\0';
-            std::cout << "[tcp_2] Received: " << buffer << std::endl;
+            std::cout << "[tcp_client] Received: " << buffer << std::endl;
         } else if (bytes == 0) {
             std::cerr << "Server closed connection\n";
             close(sock);
