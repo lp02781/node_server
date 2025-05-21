@@ -1,17 +1,17 @@
 use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest, Responder};
 use actix_web_actors::ws;
 
-mod mqtt;
 mod json;
-mod tcp;
-mod websocket;
+//mod mqtt;
+//mod tcp;
+//mod websocket;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {   
-    tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
-    tokio::spawn(async {mqtt::start_mqtt_2_subscriber().await;});
-    tokio::spawn(async {mqtt::start_mqtt_actix_publisher().await;});
-    tokio::spawn(async {tcp::start_tcp_actix().await;});
+    //tokio::spawn(async {mqtt::start_mqtt_1_subscriber().await;});
+    //tokio::spawn(async {mqtt::start_mqtt_2_subscriber().await;});
+    //tokio::spawn(async {mqtt::start_mqtt_actix_publisher().await;});
+    //tokio::spawn(async {tcp::start_tcp_actix().await;});
     //tokio::spawn(async {ros2::start_ros2_publisher().await;});
 
     HttpServer::new(move || {
