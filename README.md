@@ -7,7 +7,8 @@
 
 ## node server
 ```
-node_actix_container-> localhost:5000       
+node_actix_container-> localhost:5000    
+node_interface_container-> localhost:3000    
 node_websocket_container-> localhost:5000      
 node_tcp_container-> localhost:65432        
 node_sm_cpp_container-> localhost          
@@ -18,7 +19,7 @@ node_postgres_container-> localhost:5432
 ```
 
 - Actix server with Rust ✅
-- Next.js frontend with React.js, Javascript, HTML, CSS
+- Node.js and Next.js with React.js
 - Websocket communication ✅
 - TCP/IP communication ✅
 - Iceoryx sm cpp communication ✅
