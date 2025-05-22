@@ -19,8 +19,6 @@ node_postgres_container-> localhost:5432
 
 - Actix server with Rust ✅
 - Next.js frontend with React.js, Javascript, HTML, CSS
-- SvelteKit frontend
-- Leptos C++ WASM frontend 
 - Websocket communication ✅
 - TCP/IP communication ✅
 - Iceoryx sm cpp communication ✅
