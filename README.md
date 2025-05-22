@@ -47,5 +47,5 @@ sudo ./uninstall_node_server.sh
 ## Running 
 ```
 sudo systemctl stop mosquitto
-docker-compose up -d actix websocket tcp sm_cpp sm_rust mqtt mosquitto postgres
+docker-compose up -d actix interface websocket tcp sm_cpp sm_rust mqtt mosquitto postgres
 ```
