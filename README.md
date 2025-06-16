@@ -20,6 +20,7 @@ node_postgres_container-> localhost:5432
 
 - Actix server with Rust ✅
 - Node.js, Next.js, React.js, Javascript, HTML, CSS
+- Webassembly application
 - Websocket communication ✅
 - TCP/IP communication ✅
 - Iceoryx sm cpp communication ✅
