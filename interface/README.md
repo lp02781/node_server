@@ -6,14 +6,14 @@ node -v
 npm -v
 ```
 
+# Setup
 ```
 npm init -y
 npm install next react react-dom
 ```
 
-```
 package.json
----
+```
 {
   "name": "js_fullstack",
   "version": "1.0.0",
@@ -34,7 +34,13 @@ package.json
 }
 ```
 
+# Running
 ```
 npm run dev
+```
+
+# Uninstall
+```
+rm -rf package.json package-lock.json .next/ node_modules/
 ```
 
