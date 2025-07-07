@@ -7,7 +7,7 @@ echo "${GREEN}Uninstall first${NC}"
 sudo ./uninstall_node_server.sh
 
 echo "${GREEN}Build and run docker compose${NC}"
-docker-compose -f compose_node_server.yml up -d
+docker-compose -f compose_node_server.yml up -d websocket tcp sm_cpp sm_rust mqtt mosquitto postgres
 
 sleep 5
 
