@@ -13,3 +13,11 @@ pub struct SensorData {
     pub humidity: u32,
     pub current: f32,
 }
+
+#[derive(serde::Serialize, sqlx::FromRow)]
+pub struct DbRow {
+    timestamp: f64,
+    temperature: f32,
+    humidity: i32,
+    current: f32,
+}

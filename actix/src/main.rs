@@ -1,6 +1,6 @@
 use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest, Responder};
 use actix_web_actors::ws;
-use sqlx::postgres::PgPoolOptions;
+use sqlx::{PgPool, postgres::PgPoolOptions, FromRow};
 use std::env;
 use dotenv::dotenv;
 
@@ -29,12 +29,33 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
         .app_data(web::Data::new(db_pool.clone()))
+        .route("/db/{device}/data", web::get().to(get_data))
         .route("/node/{device}/data", web::post().to(receive_device_data))
         .route("/ws/{device}", web::get().to(websocket_handler))
     })
     .bind(("127.0.0.1", 5000))?
     .run()
     .await
+}
+
+async fn get_data(device: web::Path<String>, db_pool: web::Data<PgPool>) -> impl Responder {
+    let device_table = device.into_inner();
+
+    let query = format!(
+        "SELECT timestamp, temperature, humidity, current FROM {} ORDER BY timestamp DESC LIMIT 100",
+        device_table
+    );
+
+    match sqlx::query_as::<_, json::DbRow>(&query)
+        .fetch_all(db_pool.get_ref())
+        .await
+    {
+        Ok(rows) => HttpResponse::Ok().json(rows),
+        Err(e) => {
+            eprintln!("Database query error for table '{}': {}", device_table, e);
+            HttpResponse::InternalServerError().body("Failed to fetch data")
+        }
+    }
 }
 
 async fn receive_device_data(device: web::Path<String>, payload: web::Json<json::NodePayload>, db_pool: web::Data<sqlx::PgPool>,
