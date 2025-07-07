@@ -1,6 +1,14 @@
 version: "3.3"
 
 services:
+  interface:
+    image: lp02781/node_interface_image
+    container_name: node_interface_container
+    ports:
+      - "3000:80"
+    restart: unless-stopped  
+    network_mode: "host" 
+
   actix:
     image: lp02781/node_actix_image
     container_name: node_actix_container
