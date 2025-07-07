@@ -13,22 +13,22 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`http://localhost:5000/db/${source}/data`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      setData(json);
-    } catch (e: any) {
-      setError(e.message || 'Fetch error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`http://localhost:5000/db/${source}/data`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        setData(json);
+      } catch (e: any) {
+        setError(e.message || 'Fetch error');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchData();
   }, [source]);
 
