@@ -2,6 +2,7 @@ use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest, Responder};
 use actix_web_actors::ws;
 use sqlx::{PgPool, postgres::PgPoolOptions, FromRow};
 use std::env;
+use actix_cors::Cors;
 use dotenv::dotenv;
 
 mod json;
@@ -29,6 +30,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
         .app_data(web::Data::new(db_pool.clone()))
+        .wrap(Cors::permissive())
         .route("/db/{device}/data", web::get().to(get_data))
         .route("/node/{device}/data", web::post().to(receive_device_data))
         .route("/ws/{device}", web::get().to(websocket_handler))

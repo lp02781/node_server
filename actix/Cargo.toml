@@ -17,3 +17,4 @@ actix-web-actors = "4"
 actix = "0.13"  
 sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "macros"] }
 dotenv = "0.15"
+actix-cors = "0.7"
