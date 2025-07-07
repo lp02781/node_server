@@ -1,57 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import { TopNav } from './components/TopNav';
+import { ViewToggle } from './components/ViewToggle';
+import SensorTable from './components/SensorTable';
+import SensorGraph from './components/SensorGraph';
 
-type SensorData = {
-  timestamp: number;
-  temperature: number;
-  humidity: number;
-  current: number;
-};
+import { SensorData } from './types/SensorData';
 
 const App: React.FC = () => {
+  const [source, setSource] = useState('sm_cpp');
+  const [view, setView] = useState<'table' | 'graph'>('table');
   const [data, setData] = useState<SensorData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`http://localhost:5000/db/${source}/data`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setData(json);
+    } catch (e: any) {
+      setError(e.message || 'Fetch error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    axios.get<SensorData[]>('http://localhost:5000/db/sm_cpp/data')
-      .then(res => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch sensor data:", err);
-        setLoading(false);
-      });
-  }, []);
+    fetchData();
+  }, [source]);
 
   return (
-    <div className="App">
-      <h1>SM_CPP Sensor Data</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Temperature</th>
-              <th>Humidity</th>
-              <th>Current</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, i) => (
-              <tr key={i}>
-                <td>{row.timestamp.toFixed(2)}</td>
-                <td>{row.temperature.toFixed(2)}</td>
-                <td>{row.humidity}</td>
-                <td>{row.current.toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+    <div style={{ padding: '2rem', position: 'relative' }}>
+      <TopNav selected={source} onSelect={setSource} />
+      <ViewToggle view={view} onChange={setView} />
+      <h2>{source.toUpperCase()} - {view.toUpperCase()} View</h2>
+
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+
+      {!loading && !error && view === 'table' && <SensorTable data={data} />}
+      {!loading && !error && view === 'graph' && <SensorGraph />}
     </div>
   );
 };

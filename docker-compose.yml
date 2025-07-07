@@ -8,6 +8,14 @@ services:
     container_name: node_actix_container
     restart: unless-stopped
     network_mode: "host"
+  
+  interface:
+    build:
+      context: ./interface
+    container_name: node_interface_container
+    ports:
+      - "3000:80"
+    restart: unless-stopped
 
   websocket:
     build:
