@@ -5,6 +5,7 @@ GREEN='\e[32m'
 
 echo "${GREEN}Restart container${NC}"
 docker restart node_actix_container
+#docker restart node_interface_container
 #docker restart node_websocket_container
 #docker restart node_tcp_container
 #docker restart node_sm_cpp_container

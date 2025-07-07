@@ -1,6 +1,7 @@
 set -e
 set -x
 
+docker stop node_interface_container || true
 docker stop node_actix_container || true
 docker stop node_websocket_container || true
 docker stop node_tcp_container || true
@@ -10,6 +11,7 @@ docker stop node_mqtt_container || true
 docker stop node_mosquitto_container || true
 docker stop node_postgres_container || true
 
+docker rm node_interface_container || true
 docker rm node_actix_container || true
 docker rm node_websocket_container || true
 docker rm node_tcp_container || true
@@ -19,6 +21,7 @@ docker rm node_mqtt_container || true
 docker rm node_mosquitto_container || true
 docker rm node_postgres_container || true
 
+docker rmi lp02781/node_interface_image || true
 docker rmi lp02781/node_actix_image || true
 docker rmi lp02781/node_websocket_image || true
 docker rmi lp02781/node_tcp_image || true
