@@ -8,7 +8,7 @@
 ## node server
 ```
 node_actix_container-> localhost:5000    
-node_interface_container-> localhost:3000    
+node_interface_container-> localhost:3000 or 80   
 node_websocket_container-> localhost:5000      
 node_tcp_container-> localhost:65432        
 node_sm_cpp_container-> localhost          

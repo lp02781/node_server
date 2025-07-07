@@ -4,8 +4,6 @@ services:
   interface:
     image: lp02781/node_interface_image
     container_name: node_interface_container
-    ports:
-      - "3000:80"
     restart: unless-stopped  
     network_mode: "host" 
 
