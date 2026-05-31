@@ -1,3 +1,4 @@
+# --- Build the React frontend ---
 FROM node:20 AS build
 
 WORKDIR /app
@@ -9,12 +10,19 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine
+# --- Run the Node.js backend that serves the frontend + the API ---
+FROM node:20-slim
 
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-COPY --from=build /app/build /usr/share/nginx/html
+# Install only the backend dependencies (express + pg).
+COPY server/package.json ./
+RUN npm install
+
+# Backend source and the compiled frontend.
+COPY server/index.js ./
+COPY --from=build /app/build ./build
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "index.js"]

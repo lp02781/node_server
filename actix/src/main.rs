@@ -1,5 +1,6 @@
 use actix_web::{web, App, HttpServer, HttpResponse, HttpRequest, Responder};
 use actix_web_actors::ws;
+use actix_files as fs;
 use sqlx::{PgPool, postgres::PgPoolOptions, FromRow};
 use std::env;
 use actix_cors::Cors;
@@ -34,6 +35,8 @@ async fn main() -> std::io::Result<()> {
         .route("/db/{device}/data", web::get().to(get_data))
         .route("/node/{device}/data", web::post().to(receive_device_data))
         .route("/ws/{device}", web::get().to(websocket_handler))
+        // Serve the JavaScript frontend (registered last so the API routes win).
+        .service(fs::Files::new("/", "./static").index_file("index.html"))
     })
     .bind(("127.0.0.1", 5000))?
     .run()

@@ -29,6 +29,40 @@ node_postgres_container-> localhost:5432
 - IoT MQTT broker Mosquitto ✅
 - PostgreSQL database ✅
 
+# Two full-stack applications
+
+The project ships **two independent full-stack apps that serve the same purpose**:
+display the sensor data (temperature, humidity, current) collected from the
+`mqtt`, `sm_cpp`, `sm_rust`, `tcp`, and `websocket` producer containers.
+
+| # | Full-stack | Folder | Backend | Frontend | URL |
+|---|------------|--------|---------|----------|-----|
+| 1 | **Actix + JavaScript** | `actix/` | Rust / Actix | vanilla HTML + JS (`actix/static/index.html`) | `localhost:5000` |
+| 2 | **Node.js + React** | `interface/` | Node.js / Express (`interface/server/`) | React + TypeScript (`interface/src/`) | `localhost:3000` |
+
+## How the data flows
+
+The producer containers send sensor data to Actix, which writes it into
+PostgreSQL. Both full-stacks then read that same data back out for display:
+
+```
+Producers (mqtt, sm_cpp, sm_rust, tcp, websocket)
+        │  POST /node/{device}/data
+        ▼
+   Actix (Rust, :5000) ──writes──► PostgreSQL ◄──reads── both backends
+        │                                              │
+        │  Fullstack 1: JS frontend ──► Actix  GET /db/{source}/data  ──► PostgreSQL
+        │  Fullstack 2: React frontend ──► Node GET /api/{source}/data ──► PostgreSQL
+```
+
+- **Fullstack 1 (Actix + JavaScript):** Actix serves the static JS page at `/`
+  and reads PostgreSQL through its own `GET /db/{source}/data` endpoint.
+- **Fullstack 2 (Node.js + React):** the Node/Express server serves the built
+  React app and reads PostgreSQL directly through `GET /api/{source}/data`.
+
+Both backends share the producers' write path (Actix `POST /node/{device}/data`),
+so the two apps always show identical data.
+
 # Installation
 ```
 cd deploy

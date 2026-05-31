@@ -4,8 +4,12 @@ services:
   interface:
     image: lp02781/node_interface_image
     container_name: node_interface_container
-    restart: unless-stopped  
-    network_mode: "host" 
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      PGHOST: localhost
+    depends_on:
+      - postgres
 
   actix:
     image: lp02781/node_actix_image

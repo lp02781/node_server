@@ -18,7 +18,7 @@ const App: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`http://localhost:5000/db/${source}/data`);
+        const res = await fetch(`/api/${source}/data`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         setData(json);

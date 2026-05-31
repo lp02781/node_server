@@ -15,6 +15,10 @@ services:
     container_name: node_interface_container
     ports:
       - "3000:80"
+    environment:
+      PGHOST: postgres
+    depends_on:
+      - postgres
     restart: unless-stopped
 
   websocket:

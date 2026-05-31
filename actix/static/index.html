@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actix + JavaScript</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    .nav { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .nav button {
+      padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px;
+      cursor: pointer; background: #EEE; color: #000;
+    }
+    .nav button.active { background: #007BFF; color: #FFF; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    thead { background: #f0f0f0; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="nav" id="nav"></div>
+  <h2 id="title"></h2>
+  <p id="status"></p>
+  <table>
+    <thead>
+      <tr><th>Timestamp</th><th>Temperature</th><th>Humidity</th><th>Current</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <script>
+    const SOURCES = ['tcp', 'sm_cpp', 'sm_rust', 'mqtt', 'websocket'];
+    let source = 'sm_cpp';
+
+    const nav = document.getElementById('nav');
+    const title = document.getElementById('title');
+    const status = document.getElementById('status');
+    const rows = document.getElementById('rows');
+
+    function renderNav() {
+      nav.innerHTML = '';
+      SOURCES.forEach((src) => {
+        const btn = document.createElement('button');
+        btn.textContent = src.toUpperCase();
+        if (src === source) btn.classList.add('active');
+        btn.onclick = () => { source = src; load(); };
+        nav.appendChild(btn);
+      });
+    }
+
+    async function load() {
+      renderNav();
+      title.textContent = source.toUpperCase() + ' - TABLE View';
+      status.textContent = 'Loading...';
+      status.className = '';
+      rows.innerHTML = '';
+
+      try {
+        // Same-origin call to the Actix backend, which reads Postgres.
+        const res = await fetch(`/db/${source}/data`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        status.textContent = '';
+        data.forEach((row) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML =
+            `<td>${row.timestamp.toFixed(2)}</td>` +
+            `<td>${row.temperature.toFixed(2)}</td>` +
+            `<td>${row.humidity}</td>` +
+            `<td>${row.current.toFixed(2)}</td>`;
+          rows.appendChild(tr);
+        });
+      } catch (e) {
+        status.textContent = 'Error: ' + (e.message || 'Fetch error');
+        status.className = 'error';
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
